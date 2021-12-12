@@ -1,15 +1,44 @@
 import { BrowserRouter, NavLink } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router-dom";
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import logo from '../logo.svg';
 import { routes } from "./routes";
+
+//* Componentes
+import { NoLazy } from '../01-lazyload/pages/NoLazy';
+const LazyLayout = lazy( () => import(/* webpackChunkName: "LazyLayout "*/ '../01-lazyload/layout/LazyLayout') );
 
 export const Navigation: React.FC = () => {
     return (
         <Suspense fallback={<span> Loading... </span>}>
         <BrowserRouter>
             <div className="main-layout">
+                {/*
+                <nav>
+                    <img src={logo} alt="React Logo" />
+                    <ul>
+                        <li>
+                            <NavLink to="/lazyLayout/*" className={  ( {isActive} ) => isActive ? 'nav-active' : '' } > 
+                                Lazy Layout
+                            </NavLink>
+                        </li>
+                    </ul> 
+                    <ul>
+                        <li>
+                            <NavLink to="/no-lazy" className={  ( {isActive} ) => isActive ? 'nav-active' : '' } > 
+                                No Lazy
+                            </NavLink>
+                        </li>
+                    </ul>    
+                </nav>
+                <Routes>
+                    <Route path='/lazyLayout/*' element={ <LazyLayout /> }>
+                    </Route>
+                    <Route path='no-lazy' element={ <NoLazy /> } />
+                    <Route path="/*" element={ <Navigate to='/lazyLayout/*' replace /> } />
+                </Routes> 
+                */}
                 <nav>
                     <img src={logo} alt="React Logo" />
                     { /**** navLinks dinamicos */}
@@ -26,7 +55,7 @@ export const Navigation: React.FC = () => {
                     }
                 </nav>
 
-                <Routes>
+                 <Routes>
                 { 
                     routes.map( ({path, component: Component}) => (
                         <Route 
@@ -36,7 +65,7 @@ export const Navigation: React.FC = () => {
                     ))
                 }
                 <Route path="/*" element={ <Navigate to={ routes[0].to } replace /> } />
-                </Routes>
+                </Routes> 
             </div>
         </BrowserRouter>
         </Suspense>
